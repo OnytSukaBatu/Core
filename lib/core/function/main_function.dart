@@ -69,5 +69,3 @@ class MainFunction with MainGetStorage, MainSecureStorage {
     );
   }
 }
-
-MainFunction get f => MainFunction();

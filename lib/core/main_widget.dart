@@ -335,5 +335,3 @@ class MainWidget {
     );
   }
 }
-
-MainWidget get w => MainWidget();
