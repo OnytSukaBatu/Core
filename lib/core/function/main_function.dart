@@ -9,6 +9,10 @@ class MainFunction with MainSecureStorage {
 
   Color mainBackgroundColor = Colors.white;
 
+  void setColors({Color? background}) {
+    if (background != null) mainBackgroundColor = background;
+  }
+
   Future bottomSheet({
     required Widget content,
     double? width,

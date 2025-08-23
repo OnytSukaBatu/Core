@@ -14,6 +14,22 @@ class MainWidget {
   Color mainPrimaryColor = Colors.blue;
   Color mainTextColor = Colors.black;
 
+  void setColors({
+    Color? background,
+    Color? disable,
+    Color? enable,
+    Color? error,
+    Color? primary,
+    Color? text,
+  }) {
+    if (background != null) mainBackgroundColor = background;
+    if (disable != null) mainDisableColor = disable;
+    if (enable != null) mainEnableColor = enable;
+    if (error != null) mainErrorColor = error;
+    if (primary != null) mainPrimaryColor = primary;
+    if (text != null) mainTextColor = text;
+  }
+
   Widget text({
     required String data,
     int? maxLines,
