@@ -67,11 +67,11 @@ class MainFunction with MainSecureStorage {
   }
 
   void onChangeThemeMode(BuildContext context, {ThemeMode? themeMode}) {
-    bool isLight = Theme.of(context).brightness == Brightness.light;
-    bool isDark = Theme.of(context).brightness == Brightness.dark;
-
     if (themeMode != null) return Get.changeThemeMode(themeMode);
-    if (isLight && !isDark) Get.changeThemeMode(ThemeMode.dark);
-    if (!isLight && isDark) Get.changeThemeMode(ThemeMode.light);
+    if (Theme.of(context).brightness == Brightness.light) {
+      Get.changeThemeMode(ThemeMode.dark);
+    } else {
+      Get.changeThemeMode(ThemeMode.light);
+    }
   }
 }
