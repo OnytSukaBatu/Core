@@ -66,8 +66,7 @@ class MainFunction with MainSecureStorage {
     );
   }
 
-  void onChangeThemeMode(BuildContext context, {ThemeMode? themeMode}) {
-    if (themeMode != null) return Get.changeThemeMode(themeMode);
-    Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light : ThemeMode.light);
+  void onChangeThemeMode({required ThemeMode themeMode}) {
+    Get.changeThemeMode(themeMode);
   }
 }
