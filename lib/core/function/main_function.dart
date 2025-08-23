@@ -3,16 +3,6 @@ import 'package:get/get.dart';
 import 'package:core/core/function/main_secure_storage.dart';
 
 class MainFunction with MainSecureStorage {
-  static final MainFunction _instance = MainFunction._internal();
-  factory MainFunction() => _instance;
-  MainFunction._internal();
-
-  Color mainBackgroundColor = Colors.white;
-
-  void setColors({Color? background}) {
-    if (background != null) mainBackgroundColor = background;
-  }
-
   Future bottomSheet({
     required Widget content,
     double? width,
@@ -24,7 +14,6 @@ class MainFunction with MainSecureStorage {
   }) async {
     width ??= double.infinity;
     padding ??= EdgeInsets.all(16);
-    backgroundColor ??= mainBackgroundColor;
     isDismissible ??= true;
     isScrollController ??= false;
 
@@ -43,7 +32,6 @@ class MainFunction with MainSecureStorage {
     EdgeInsets? insetPadding,
     bool? barrierDismissible,
   }) async {
-    backgroundColor ??= mainBackgroundColor;
     barrierDismissible ??= true;
 
     return await Get.dialog(
@@ -56,7 +44,8 @@ class MainFunction with MainSecureStorage {
     );
   }
 
-  void snackBar({
+  void snackBar(
+    BuildContext context, {
     required Widget content,
     Color? backgroundColor,
     Duration? duration,
@@ -64,12 +53,11 @@ class MainFunction with MainSecureStorage {
     ShapeBorder? shape,
     double? width,
   }) {
-    duration ??= Duration(seconds: 5);
+    duration ??= Duration(milliseconds: 4000);
 
-    ScaffoldMessenger.of(Get.context!).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: content,
-        backgroundColor: mainBackgroundColor,
         duration: duration,
         padding: padding,
         shape: shape,

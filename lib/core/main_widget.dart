@@ -3,33 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class MainWidget {
-  static final MainWidget _instance = MainWidget._internal();
-  factory MainWidget() => _instance;
-  MainWidget._internal();
-
-  Color mainBackgroundColor = Colors.white;
-  Color mainDisableColor = Colors.grey;
-  Color mainEnableColor = Colors.black;
-  Color mainErrorColor = Colors.red;
-  Color mainPrimaryColor = Colors.blue;
-  Color mainTextColor = Colors.black;
-
-  void setColors({
-    Color? background,
-    Color? disable,
-    Color? enable,
-    Color? error,
-    Color? primary,
-    Color? text,
-  }) {
-    if (background != null) mainBackgroundColor = background;
-    if (disable != null) mainDisableColor = disable;
-    if (enable != null) mainEnableColor = enable;
-    if (error != null) mainErrorColor = error;
-    if (primary != null) mainPrimaryColor = primary;
-    if (text != null) mainTextColor = text;
-  }
-
   Widget text({
     required String data,
     int? maxLines,
@@ -42,7 +15,6 @@ class MainWidget {
     FontWeight? fontWeight,
   }) {
     style ??= GoogleFonts.poppins();
-    color ??= mainTextColor;
 
     return Text(
       data,
@@ -73,7 +45,6 @@ class MainWidget {
     softWrap = true;
     TextAlign textAlign = TextAlign.start;
     style ??= GoogleFonts.poppins();
-    defaultColor ??= mainTextColor;
 
     return RichText(
       maxLines: maxLines,
@@ -99,7 +70,6 @@ class MainWidget {
     FontWeight? fontWeight,
   }) {
     style ??= GoogleFonts.poppins();
-    color ??= mainTextColor;
 
     return TextSpan(
       style: style.copyWith(
@@ -160,10 +130,6 @@ class MainWidget {
     InputBorder? enabledBorder,
     InputBorder? errorBorder,
     InputBorder? focusedBorder,
-    Color? disabledBorderColor,
-    Color? enabledBorderColor,
-    Color? errorBorderColor,
-    Color? focusedBorderColor,
   }) {
     expands ??= false;
     obscureText ??= false;
@@ -177,22 +143,6 @@ class MainWidget {
       FocusManager.instance.primaryFocus!.unfocus();
     }
 
-    disabledBorder ??= OutlineInputBorder();
-    enabledBorder ??= OutlineInputBorder();
-    errorBorder ??= OutlineInputBorder();
-    focusedBorder ??= OutlineInputBorder();
-
-    disabledBorderColor ??= mainDisableColor;
-    enabledBorderColor ??= mainEnableColor;
-    focusedBorderColor ??= mainPrimaryColor;
-    errorBorderColor ??= mainErrorColor;
-
-    cursorColor ??= mainEnableColor;
-    fillColor ??= mainBackgroundColor;
-    fontColor ??= mainTextColor;
-    counterFontColor ??= mainTextColor;
-    errorFontColor ??= mainErrorColor;
-
     return TextFormField(
       buildCounter: buildCounter,
       controller: controller,
@@ -204,15 +154,9 @@ class MainWidget {
           fontSize: counterFontSize,
           fontWeight: counterFontWeight,
         ),
-        disabledBorder: disabledBorder.copyWith(
-          borderSide: BorderSide(color: disabledBorderColor),
-        ),
-        enabledBorder: enabledBorder.copyWith(
-          borderSide: BorderSide(color: enabledBorderColor),
-        ),
-        errorBorder: errorBorder.copyWith(
-          borderSide: BorderSide(color: errorBorderColor),
-        ),
+        disabledBorder: disabledBorder,
+        enabledBorder: enabledBorder,
+        errorBorder: errorBorder,
         errorStyle: errorStyle.copyWith(
           color: errorFontColor,
           fontSize: errorFontSize,
@@ -220,9 +164,7 @@ class MainWidget {
         ),
         fillColor: fillColor,
         filled: true,
-        focusedBorder: focusedBorder.copyWith(
-          borderSide: BorderSide(color: focusedBorderColor),
-        ),
+        focusedBorder: focusedBorder,
         hint: hint,
         isDense: isDense,
         label: label,
@@ -257,25 +199,22 @@ class MainWidget {
   Widget checkbox({
     required bool value,
     required void Function(bool?)? onChanged,
-    Color? activeColor,
     Color? checkColor,
-    Color? fillColor,
     BorderRadiusGeometry? borderRadius,
-    Color? borderColor,
+    BorderSide? side,
+    WidgetStateProperty<Color?>? fillColor,
+    WidgetStateProperty<Color?>? overlayColor,
   }) {
-    activeColor ??= mainPrimaryColor;
-    checkColor ??= mainBackgroundColor;
-    fillColor ??= mainBackgroundColor;
     borderRadius ??= BorderRadius.zero;
-    borderColor ??= mainEnableColor;
 
     return Checkbox(
       value: value,
       onChanged: onChanged,
-      activeColor: activeColor,
       checkColor: checkColor,
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
-      side: BorderSide(color: borderColor),
+      side: side,
+      fillColor: fillColor,
+      overlayColor: overlayColor,
     );
   }
 
@@ -283,44 +222,37 @@ class MainWidget {
     required bool value,
     required dynamic groupValue,
     required ValueChanged<Object?>? onChanged,
-    Color? activeColor,
-    Color? focusColor,
     bool? toggleable,
+    WidgetStateProperty<Color?>? overlayColor,
+    WidgetStateProperty<Color?>? fillColor,
   }) {
-    activeColor ??= mainEnableColor;
-    focusColor ??= mainPrimaryColor;
     toggleable ??= false;
 
     return Radio(
       value: value,
       groupValue: groupValue,
       onChanged: onChanged,
-      activeColor: activeColor,
-      focusColor: focusColor,
       toggleable: toggleable,
+      overlayColor: overlayColor,
+      fillColor: fillColor,
     );
   }
 
   Widget swicth({
     required bool value,
     required Function(bool?)? onChanged,
-    Color? activeThumbColor,
-    Color? activeTrackColor,
-    Color? inactiveThumbColor,
-    Color? inactiveTrackColor,
+    WidgetStateProperty<Color?>? thumbColor,
+    WidgetStateProperty<Color?>? trackColor,
+    WidgetStateProperty<Color?>? overlayColor,
+    WidgetStateProperty<Icon?>? thumbIcon,
   }) {
-    activeThumbColor ??= mainBackgroundColor;
-    activeTrackColor ??= mainPrimaryColor;
-    inactiveThumbColor ??= mainBackgroundColor;
-    inactiveTrackColor ??= mainEnableColor;
-
     return Switch(
       value: value,
       onChanged: onChanged,
-      activeColor: activeThumbColor,
-      activeTrackColor: activeTrackColor,
-      inactiveThumbColor: inactiveThumbColor,
-      inactiveTrackColor: inactiveTrackColor,
+      thumbColor: thumbColor,
+      trackColor: trackColor,
+      overlayColor: overlayColor,
+      thumbIcon: thumbIcon,
     );
   }
 
@@ -342,19 +274,12 @@ class MainWidget {
     Color? fontColor,
     double? fontSize,
     FontWeight? fontWeight,
-    Color? enabledBorderColor,
-    Color? focusedBorderColor,
   }) {
     isDense ??= true;
     isExpanded ??= true;
     style ??= GoogleFonts.poppins();
     enabledBorder ??= OutlineInputBorder();
     focusedBorder ??= OutlineInputBorder();
-
-    dropdownColor ??= mainBackgroundColor;
-    fontColor ??= mainTextColor;
-    enabledBorderColor ??= mainEnableColor;
-    focusedBorderColor ??= mainPrimaryColor;
 
     return DropdownButtonFormField(
       value: value,
@@ -364,12 +289,8 @@ class MainWidget {
       borderRadius: borderRadius,
       decoration: InputDecoration(
         contentPadding: contentPadding,
-        enabledBorder: enabledBorder.copyWith(
-          borderSide: BorderSide(color: enabledBorderColor),
-        ),
-        focusedBorder: focusedBorder.copyWith(
-          borderSide: BorderSide(color: focusedBorderColor),
-        ),
+        enabledBorder: enabledBorder,
+        focusedBorder: focusedBorder,
       ),
       dropdownColor: dropdownColor,
       icon: icon,
@@ -397,18 +318,16 @@ class MainWidget {
     double? borderWidth,
     bool? enabled,
   }) {
-    enabled ?? true;
-    backgroundColor ??= mainPrimaryColor;
-    disabledBackgroundColor ??= mainDisableColor;
+    enabled ??= true;
     borderRadius ??= BorderRadius.circular(16);
-    borderColor ??= backgroundColor;
-    borderWidth ??= 1;
+    borderColor ??= Color(0x00000000);
+    borderWidth ??= 1.0;
 
     return SizedBox(
       width: width,
       child: ElevatedButton(
-        onPressed: onPressed,
-        onLongPress: onLongPress,
+        onPressed: enabled ? onPressed : null,
+        onLongPress: enabled ? onLongPress : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           disabledBackgroundColor: disabledBackgroundColor,
