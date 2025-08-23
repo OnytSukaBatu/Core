@@ -3,6 +3,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class MainWidget {
+  static final MainWidget _instance = MainWidget._internal();
+  factory MainWidget() => _instance;
+  MainWidget._internal();
+
+  Color mainBackgroundColor = Colors.white;
+  Color mainDisableColor = Colors.grey;
+  Color mainEnableColor = Colors.black;
+  Color mainErrorColor = Colors.red;
+  Color mainPrimaryColor = Colors.blue;
+  Color mainTextColor = Colors.black;
+
   Widget text({
     required String data,
     int? maxLines,
@@ -15,6 +26,7 @@ class MainWidget {
     FontWeight? fontWeight,
   }) {
     style ??= GoogleFonts.poppins();
+    color ??= mainTextColor;
 
     return Text(
       data,
@@ -45,6 +57,7 @@ class MainWidget {
     softWrap = true;
     TextAlign textAlign = TextAlign.start;
     style ??= GoogleFonts.poppins();
+    defaultColor ??= mainTextColor;
 
     return RichText(
       maxLines: maxLines,
@@ -70,6 +83,7 @@ class MainWidget {
     FontWeight? fontWeight,
   }) {
     style ??= GoogleFonts.poppins();
+    color ??= mainTextColor;
 
     return TextSpan(
       style: style.copyWith(
@@ -152,10 +166,16 @@ class MainWidget {
     errorBorder ??= OutlineInputBorder();
     focusedBorder ??= OutlineInputBorder();
 
-    disabledBorderColor ??= Colors.grey;
-    enabledBorderColor ??= Colors.black;
-    focusedBorderColor ??= Colors.blue;
-    errorBorderColor ??= Colors.red;
+    disabledBorderColor ??= mainDisableColor;
+    enabledBorderColor ??= mainEnableColor;
+    focusedBorderColor ??= mainPrimaryColor;
+    errorBorderColor ??= mainErrorColor;
+
+    cursorColor ??= mainEnableColor;
+    fillColor ??= mainBackgroundColor;
+    fontColor ??= mainTextColor;
+    counterFontColor ??= mainTextColor;
+    errorFontColor ??= mainErrorColor;
 
     return TextFormField(
       buildCounter: buildCounter,
@@ -227,8 +247,11 @@ class MainWidget {
     BorderRadiusGeometry? borderRadius,
     Color? borderColor,
   }) {
+    activeColor ??= mainPrimaryColor;
+    checkColor ??= mainBackgroundColor;
+    fillColor ??= mainBackgroundColor;
     borderRadius ??= BorderRadius.zero;
-    borderColor ??= Colors.black;
+    borderColor ??= mainEnableColor;
 
     return Checkbox(
       value: value,
@@ -248,6 +271,8 @@ class MainWidget {
     Color? focusColor,
     bool? toggleable,
   }) {
+    activeColor ??= mainEnableColor;
+    focusColor ??= mainPrimaryColor;
     toggleable ??= false;
 
     return Radio(
@@ -268,6 +293,11 @@ class MainWidget {
     Color? inactiveThumbColor,
     Color? inactiveTrackColor,
   }) {
+    activeThumbColor ??= mainBackgroundColor;
+    activeTrackColor ??= mainPrimaryColor;
+    inactiveThumbColor ??= mainBackgroundColor;
+    inactiveTrackColor ??= mainEnableColor;
+
     return Switch(
       value: value,
       onChanged: onChanged,
@@ -304,8 +334,11 @@ class MainWidget {
     style ??= GoogleFonts.poppins();
     enabledBorder ??= OutlineInputBorder();
     focusedBorder ??= OutlineInputBorder();
-    enabledBorderColor ??= Colors.black;
-    focusedBorderColor ??= Colors.blue;
+
+    dropdownColor ??= mainBackgroundColor;
+    fontColor ??= mainTextColor;
+    enabledBorderColor ??= mainEnableColor;
+    focusedBorderColor ??= mainPrimaryColor;
 
     return DropdownButtonFormField(
       value: value,
@@ -333,5 +366,46 @@ class MainWidget {
         fontWeight: fontWeight,
       ),
     );
+  }
+
+  Widget button({
+    required Function() onPressed,
+    required Widget child,
+    double? width,
+    Function()? onLongPress,
+    Color? backgroundColor,
+    Color? disabledBackgroundColor,
+    EdgeInsetsGeometry? padding,
+    BorderRadiusGeometry? borderRadius,
+    Color? borderColor,
+    double? borderWidth,
+    bool? enabled,
+  }) {
+    enabled ?? true;
+    backgroundColor ??= mainPrimaryColor;
+    disabledBackgroundColor ??= mainDisableColor;
+    borderRadius ??= BorderRadius.circular(16);
+    borderColor ??= backgroundColor;
+    borderWidth ??= 1;
+
+    return SizedBox(
+      width: width,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        onLongPress: onLongPress,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor,
+          disabledBackgroundColor: disabledBackgroundColor,
+          padding: padding,
+          shape: RoundedRectangleBorder(borderRadius: borderRadius),
+          side: BorderSide(color: borderColor, width: borderWidth),
+        ),
+        child: child,
+      ),
+    );
+  }
+
+  Widget gap({double? height, double? width}) {
+    return SizedBox(height: height, width: width);
   }
 }
