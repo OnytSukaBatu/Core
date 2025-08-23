@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:core/core/function/main_get_storage.dart';
 import 'package:core/core/function/main_secure_storage.dart';
 
-class MainFunction with MainGetStorage, MainSecureStorage {
+class MainFunction with MainSecureStorage {
   Future bottomSheet({
     required Widget content,
     double? width,

@@ -1,7 +1,7 @@
 name: core
 description: "@onytsukabatu"
 publish_to: 'none'
-version: 0.0.2+2
+version: 0.0.3+3
 
 environment:
   sdk: ^3.8.0
@@ -13,7 +13,6 @@ dependencies:
   
   flutter_secure_storage: ^9.2.4
   get: ^4.7.2
-  get_storage: ^2.1.1
   google_fonts: ^6.3.0
 
 dev_dependencies:
